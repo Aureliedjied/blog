@@ -1,4 +1,56 @@
 {
+    "api-platform/core": {
+        "version": "2.7",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.5",
+            "ref": "b86557ce5677fa855b1b2608f4a4bc4a8fed8be7"
+        },
+        "files": [
+            "./config/packages/api_platform.yaml",
+            "./config/routes/api_platform.yaml",
+            "./src/Entity/.gitignore"
+        ]
+    },
+    "doctrine/annotations": {
+        "version": "2.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "a2759dd6123694c8d901d0ec80006e044c2e6457"
+        },
+        "files": [
+            "./config/routes/annotations.yaml"
+        ]
+    },
+    "doctrine/doctrine-bundle": {
+        "version": "2.11",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.4",
+            "ref": "013b823e7fee65890b23e40f31e6667a1ac519ac"
+        },
+        "files": [
+            "./config/packages/doctrine.yaml",
+            "./src/Entity/.gitignore",
+            "./src/Repository/.gitignore"
+        ]
+    },
+    "doctrine/doctrine-fixtures-bundle": {
+        "version": "3.5",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "3.0",
+            "ref": "1f5514cfa15b947298df4d771e694e578d4c204d"
+        },
+        "files": [
+            "./src/DataFixtures/AppFixtures.php"
+        ]
+    },
     "symfony/console": {
         "version": "5.4",
         "recipe": {
@@ -41,6 +93,15 @@
             "./src/Controller/.gitignore",
             "./src/Kernel.php"
         ]
+    },
+    "symfony/maker-bundle": {
+        "version": "1.43",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
+        }
     },
     "symfony/routing": {
         "version": "5.4",
