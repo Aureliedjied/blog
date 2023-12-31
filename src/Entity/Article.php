@@ -6,6 +6,7 @@ use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
@@ -30,7 +31,8 @@ class Article
     private $content;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="json")
+     * @Assert\NotBlank
      */
     private $itinerary;
 
@@ -41,8 +43,14 @@ class Article
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Comment", mappedBy="article", orphanRemoval=true)
+     * @ORM\OrderBy({"createdAt" = "DESC"})
      */
     private $comments;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     */
+    private $category;
 
     public function __construct()
     {
@@ -79,16 +87,22 @@ class Article
         return $this;
     }
 
-    public function getItinerary(): ?string
+    /**
+     * Set the itinerary data.
+     */
+    public function setItinerary(array $itineraryData): self
     {
-        return $this->itinerary;
-    }
-
-    public function setItinerary(string $itinerary): self
-    {
-        $this->itinerary = $itinerary;
+        $this->itinerary = $itineraryData;
 
         return $this;
+    }
+
+    /**
+     * Get the itinerary data.
+     */
+    public function getItinerary(): array
+    {
+        return $this->itinerary;
     }
 
     public function getSocialShares(): ?string
@@ -129,6 +143,18 @@ class Article
                 $comment->setArticle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
