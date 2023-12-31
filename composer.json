@@ -27,6 +27,7 @@
         "symfony/serializer": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
         "symfony/ux-react": "^2.8",
+        "symfony/validator": "5.4.*",
         "symfony/webpack-encore-bundle": "^1.17",
         "symfony/yaml": "5.4.*",
         "twig/extensions": "^1.5",

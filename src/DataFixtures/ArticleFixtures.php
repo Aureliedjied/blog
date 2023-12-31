@@ -1,6 +1,6 @@
 <?php
 
-namespace App\DataFixtures\Article;
+namespace App\DataFixtures;
 
 use Faker\Factory;
 use App\Entity\Article;
@@ -15,8 +15,9 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 {
     public function getDependencies()
     {
-        return [UserFixtures::class, CategoryFixtures::class];
+        return [UserFixtures::class, CategoryFixtures::class, ItineraryFixtures::class];
     }
+
     public function load(ObjectManager $manager)
     {
         $faker = Factory::create();
@@ -24,9 +25,12 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 20; $i++) {
             $article = new Article();
             $article->setAuthor($this->getReference('admin-user'));
-            $article->setCategory($this->getReference('category-' . rand(0, 5)));
+            $article->setCategory($this->getReference('category-' . rand(0, '4')));
             $article->setTitle($faker->sentence());
             $article->setContent($faker->paragraph());
+
+            $article->setItinerary($this->getReference('itinerary_0'));
+
             $manager->persist($article);
 
             $this->addReference("article_$i", $article);
@@ -44,7 +48,8 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 0; $i < 20; $i++) {
             $comment = new Comment();
             $comment->setAuthor($this->getReference('user-' . rand(0, 9)));
-            $comment->setContent($faker->paragraph);
+            $comment->setContent($faker->paragraph());
+            $comment->setIsApproved(true);
             // Associer le commentaire à un article existant (à adapter selon votre structure)
             $comment->setArticle($this->getReference('article_' . $i));
 

@@ -32,9 +32,15 @@ class Comment
      */
     private $article;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isApproved;
+
     public function getId(): ?int
     {
         return $this->id;
+        $this->isApproved = false;
     }
 
     public function getAuthor(): ?User
@@ -69,6 +75,18 @@ class Comment
     public function setArticle(?Article $article): self
     {
         $this->article = $article;
+
+        return $this;
+    }
+
+    public function getIsApproved(): ?bool
+    {
+        return $this->isApproved;
+    }
+
+    public function setIsApproved(bool $isApproved): self
+    {
+        $this->isApproved = $isApproved;
 
         return $this;
     }

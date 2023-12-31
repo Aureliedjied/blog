@@ -2,10 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ArticleRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use Assert\NotBlank;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\ArticleRepository;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -32,13 +33,12 @@ class Article
     private $content;
 
     /**
-     * @ORM\Column(type="json")
-     * @Assert\NotBlank
+     * @ORM\ManyToOne(targetEntity=Itinerary::class, inversedBy="articles")
      */
     private $itinerary;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\OneToMany(targetEntity=SocialShare::class, mappedBy="article")
      */
     private $socialShares;
 
@@ -74,6 +74,7 @@ class Article
         $this->comments = new ArrayCollection();
         $this->setCreatedAt(new \DateTimeImmutable());
         $this->setUpdatedAt(new \DateTimeImmutable());
+        $this->socialShares = new ArrayCollection();
     }
 
 
@@ -106,32 +107,37 @@ class Article
         return $this;
     }
 
-    /**
-     * Set the itinerary data.
-     */
-    public function setItinerary(array $itineraryData): self
-    {
-        $this->itinerary = $itineraryData;
 
-        return $this;
-    }
-
-    /**
-     * Get the itinerary data.
-     */
-    public function getItinerary(): array
+    public function getItinerary(): ?Itinerary
     {
         return $this->itinerary;
     }
 
-    public function getSocialShares(): ?string
+    public function setItinerary(?Itinerary $itinerary): self
     {
-        return $this->socialShares;
+        $this->itinerary = $itinerary;
+
+        return $this;
     }
 
-    public function setSocialShares(string $socialShares): self
+    public function addSocialShare(SocialShare $socialShare): self
     {
-        $this->socialShares = $socialShares;
+        if (!$this->socialShares->contains($socialShare)) {
+            $this->socialShares[] = $socialShare;
+            $socialShare->setArticle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialShare(SocialShare $socialShare): self
+    {
+        if ($this->socialShares->removeElement($socialShare)) {
+            // set the owning side to null (unless already changed)
+            if ($socialShare->getArticle() === $this) {
+                $socialShare->setArticle(null);
+            }
+        }
 
         return $this;
     }
