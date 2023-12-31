@@ -23,6 +23,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
 
         for ($i = 0; $i < 20; $i++) {
             $article = new Article();
+            $article->setAuthor($this->getReference('admin-user'));
             $article->setCategory($this->getReference('category-' . rand(0, 5)));
             $article->setTitle($faker->sentence());
             $article->setContent($faker->paragraph());
