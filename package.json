@@ -10,6 +10,14 @@
   "devDependencies": {
     "@babel/preset-react": "^7.23.3",
     "@hotwired/stimulus": "^3.0.0",
-    "@symfony/ux-react": "file:vendor/symfony/ux-react/assets"
+    "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
+    "@symfony/webpack-encore": "^4.5.0",
+    "postcss-loader": "^7.3.4",
+    "webpack-notifier": "^1.15.0"
+  },
+  "scripts": {
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production"
   }
 }

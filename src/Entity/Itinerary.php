@@ -39,10 +39,16 @@ class Itinerary
      */
     private $articles;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\SocialShare", mappedBy="itinerary")
+     */
+    private $socialShares;
+
     public function __construct()
     {
         $this->pointsOfInterest = new ArrayCollection();
         $this->articles = new ArrayCollection();
+        $this->socialShares = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -134,6 +140,37 @@ class Itinerary
             // set the owning side to null (unless already changed)
             if ($article->getItinerary() === $this) {
                 $article->setItinerary(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|SocialShare[]
+     */
+    public function getSocialShares(): Collection
+    {
+        return $this->socialShares;
+    }
+
+    public function addSocialShare(SocialShare $socialShare): self
+    {
+        if (!$this->socialShares->contains($socialShare)) {
+            $this->socialShares[] = $socialShare;
+            $socialShare->setItinerary($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSocialShare(SocialShare $socialShare): self
+    {
+        if ($this->socialShares->contains($socialShare)) {
+            $this->socialShares->removeElement($socialShare);
+            // set the owning side to null (unless already changed)
+            if ($socialShare->getItinerary() === $this) {
+                $socialShare->setItinerary(null);
             }
         }
 

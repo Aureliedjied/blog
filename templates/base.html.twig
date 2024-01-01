@@ -1,19 +1,60 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>
+			{% block title %}Bienvenue sur le blog
+			{% endblock %}
+		</title>
+		<link
+		rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+	{# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+	</head>
+	<body>
+		{% block body %}
+
+
+			<footer class="bg-dark py-4">
+				<div class="container">
+					<div class="row py-2 gy-2">
+						<div class="col-lg-4 text-center text-lg-start">
+							<p class="small text-muted text-uppercase mb-0">&copy; copyright 2024 - all rights reserved</p>
+						</div>
+						<div class="col-lg-4 text-center">
+							<ul class="list-inline text-white small mb-0">
+								<li class="list-inline-item">
+									<a class="reset-anchor" href="#!">
+										<i class="fab fa-facebook-f"></i>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="reset-anchor" href="#!">
+										<i class="fab fa-twitter"></i>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="reset-anchor" href="#!">
+										<i class="fab fa-instagram"></i>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="reset-anchor" href="#!">
+										<i class="fab fa-youtube"></i>
+									</a>
+								</li>
+								<li class="list-inline-item">
+									<a class="reset-anchor" href="#!">
+										<i class="fab fa-vimeo-v"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+
+					</div>
+				</div>
+			</footer>
+		{% endblock %}
+	</body>
 </html>

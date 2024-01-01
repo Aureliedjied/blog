@@ -50,7 +50,8 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $comment->setAuthor($this->getReference('user-' . rand(0, 9)));
             $comment->setContent($faker->paragraph());
             $comment->setIsApproved(true);
-            // Associer le commentaire à un article existant (à adapter selon votre structure)
+            $comment->setCreatedAt(new \DateTime());
+            // Associer le commentaire à un article existant 
             $comment->setArticle($this->getReference('article_' . $i));
 
             $manager->persist($comment);
