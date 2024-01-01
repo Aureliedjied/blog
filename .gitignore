@@ -19,4 +19,4 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 /public/.htaccess
-/public/uploads/articles
+/public/uploads/articles/*
