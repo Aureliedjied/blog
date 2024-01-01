@@ -28,6 +28,7 @@ class ArticleFixtures extends Fixture implements DependentFixtureInterface
             $article->setCategory($this->getReference('category-' . rand(0, '4')));
             $article->setTitle($faker->sentence());
             $article->setContent($faker->paragraph());
+            $article->setSlug($faker->slug());
 
             $article->setItinerary($this->getReference('itinerary_0'));
 
