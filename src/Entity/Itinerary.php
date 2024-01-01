@@ -176,4 +176,26 @@ class Itinerary
 
         return $this;
     }
+
+    public function addPointsOfInterest(PointOfInterest $pointsOfInterest): self
+    {
+        if (!$this->pointsOfInterest->contains($pointsOfInterest)) {
+            $this->pointsOfInterest[] = $pointsOfInterest;
+            $pointsOfInterest->setItinerary($this);
+        }
+
+        return $this;
+    }
+
+    public function removePointsOfInterest(PointOfInterest $pointsOfInterest): self
+    {
+        if ($this->pointsOfInterest->removeElement($pointsOfInterest)) {
+            // set the owning side to null (unless already changed)
+            if ($pointsOfInterest->getItinerary() === $this) {
+                $pointsOfInterest->setItinerary(null);
+            }
+        }
+
+        return $this;
+    }
 }

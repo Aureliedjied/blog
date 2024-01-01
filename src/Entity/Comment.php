@@ -107,4 +107,9 @@ class Comment
 
         return $this;
     }
+
+    public function isIsApproved(): ?bool
+    {
+        return $this->isApproved;
+    }
 }
