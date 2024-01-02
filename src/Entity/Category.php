@@ -22,6 +22,7 @@ class Category
 
     /**
      * @ORM\Column(type="string", length=255, unique=true)
+     * @Assert\NotBlank(message="Le nom ne peut pas être vide.")
      * @Assert\NotBlank
      */
     private $name;

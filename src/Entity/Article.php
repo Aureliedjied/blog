@@ -4,10 +4,12 @@ namespace App\Entity;
 
 use Assert\NotBlank;
 use Doctrine\ORM\Mapping as ORM;
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\File\File;
+use Doctrine\Common\Collections\ArrayCollection;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -15,6 +17,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity(repositoryClass=ArticleRepository::class)
  * @ORM\HasLifecycleCallbacks
  * @Vich\Uploadable
+ * @ApiResource(normalizationContext={"groups"={"read:article"}})
  */
 class Article
 {
@@ -27,16 +30,21 @@ class Article
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank(message="Le titre ne peut pas être vide.")
+     * @groups({"read:article"})
      */
     private $title;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Le contenu ne peut pas être vide.")
+     * @groups({"read:article"})
      */
     private $content;
 
     /**
      * @ORM\ManyToOne(targetEntity=Itinerary::class, inversedBy="articles")
+     * @groups({"read:article"})
      */
     private $itinerary;
 
@@ -48,6 +56,7 @@ class Article
     /**
      * @ORM\ManyToOne(targetEntity=User::class)
      * @ORM\JoinColumn(nullable=true)
+     * @groups({"read:article"})
      */
     private $author;
 
@@ -59,6 +68,7 @@ class Article
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="articles")
+     * @groups({"read:article"})
      */
     private $category;
 
@@ -69,6 +79,7 @@ class Article
 
     /**
      * @ORM\Column(type="datetime_immutable")
+     * @groups({"read:article"})
      */
     private $created_at;
 
@@ -90,6 +101,13 @@ class Article
 
     /**
      * @Vich\UploadableField(mapping="articles", fileNameProperty="file")
+     * @Assert\Image(
+     *     maxSize="5M",
+     *     maxSizeMessage="La taille de l'image ne doit pas dépasser 5 Mo.",
+     *     mimeTypes={"image/jpeg", "image/png"},
+     *     mimeTypesMessage="Veuillez télécharger une image au format JPEG ou PNG."
+     * )
+     * @Groups({"read:article"})
      * @var File|null
      */
     private $imageFile;

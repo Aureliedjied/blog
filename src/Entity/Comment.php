@@ -3,10 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
+use ApiPlatform\Core\Annotation\ApiResource;
+use Symfony\Component\Validator\Constraints as Assert;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
+ * @ApiResource(normalizationContext={"groups"={"read:comment"}})
  */
 class Comment
 {
@@ -19,11 +23,14 @@ class Comment
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="comments")
+     * @groups({"read:comment"})
      */
     private $author;
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank(message="Le contenu du commentaire ne peut pas être vide.")
+     * @groups({"read:comment"})
      */
     private $content;
 
@@ -39,6 +46,7 @@ class Comment
 
     /**
      * @ORM\Column(type="datetime")
+     * @groups({"read:comment"})
      */
     private $createdAt;
 
